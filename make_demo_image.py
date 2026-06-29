@@ -1,5 +1,5 @@
 from pathlib import Path
-import base64
+from urllib.request import urlopen
 
 mode = Path("lab_mode.txt").read_text(encoding="utf-8").strip().lower()
 
@@ -8,10 +8,10 @@ if mode not in ["clean", "suspicious"]:
 
 Path("images").mkdir(exist_ok=True)
 
-# Small valid 1x1 PNG image.
-png_data = base64.b64decode(
-    "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKElEQVR4nO3NMQEAAAgDINc/9F0hQYJ2ZCbpksmSJUkAAAAAAAAAAAB4GQKcAAH4uPMFAAAAAElFTkSuQmCC"
-)
+image_url = "https://upload.wikimedia.org/wikipedia/commons/b/b0/Tokyo_International_University_Logo.png"
+
+with urlopen(image_url) as response:
+    png_data = response.read()
 
 if mode == "suspicious":
     png_data += b"\nPRIVATE_KEY: This is harmless demo hidden data for the StegoGuard lab.\n"
