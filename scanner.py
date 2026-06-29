@@ -17,6 +17,7 @@ SUSPICIOUS_WORDS = [
     b"token",
     b"api_key",
     b"confidential",
+    b"private_key",
 ]
 
 def scan_image(path):
